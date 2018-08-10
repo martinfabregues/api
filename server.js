@@ -1,11 +1,12 @@
-var express = require('express')
-var http = require('http')
-var app = express()
-
-app.get('/', (req, res) => {
-  res.status(200).send("Welcome to API REST")
-})
-
-http.createServer(app).listen(8001, () => {
-  console.log('Server started at http://localhost:8001');
+var express = require('express');
+var http = require('http');
+var path = require('path');
+ 
+var app = express();
+app.set('port', process.env.PORT || 8001);
+ 
+require('./app/routes/cliente')(app);
+ 
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
 });
