@@ -86,7 +86,7 @@ module.exports = function(app)
 	});
 
 	//obtiene un usuario por su id
-	app.post("/users", function(req, res)
+	app.post("/insertCliente", function(req, res)
 	{
 		//creamos un objeto con los datos a insertar del usuario
 		var userData = {
@@ -97,7 +97,8 @@ module.exports = function(app)
 			created_at : null,
 			updated_at : null
 		};
-		ClienteModel.insertUser(userData, function(error, data)
+
+		ClienteModel.insertCliente(userData, function(error, data)
 		{
 			//si el usuario se ha insertado correctamente mostramos su info
 			if(data && data.insertId)

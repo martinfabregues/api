@@ -1,4 +1,4 @@
-//llamamos al paquete mysql que hemos instalado
+//llamamos al paquete mysql
 var mysql = require('mysql'),
 //creamos la conexion a nuestra base de datos con los datos de acceso de cada uno
 connection = mysql.createConnection(
@@ -10,15 +10,15 @@ connection = mysql.createConnection(
 	}
 );
 
-//creamos un objeto para ir almacenando todo lo que necesitemos
+//creamos un objeto para instanciar la clase
 var clienteModel = {};
 
-//obtenemos todos los usuarios
+//obtenemos todos los clientes
 clienteModel.getClientes = function(callback)
 {
 	if (connection) 
 	{
-		connection.query('SELECT * FROM CLIENTES ORDER BY id', function(error, rows) {
+		connection.query('SELECT * FROM CLIENTES ORDER BY ID', function(error, rows) {
 			if(error)
 			{
 				throw error;
@@ -31,7 +31,7 @@ clienteModel.getClientes = function(callback)
 	}
 }
 
-//obtenemos un usuario por su id
+//obtenemos un cliente por su id
 clienteModel.getCliente = function(id, callback)
 {
 	if (connection) 
@@ -51,7 +51,7 @@ clienteModel.getCliente = function(id, callback)
 	}
 }
 
-//añadir un nuevo usuario
+//añadir un nuevo cliente
 clienteModel.insertCliente = function(clienteData, callback)
 {
 	if (connection) 
@@ -71,13 +71,13 @@ clienteModel.insertCliente = function(clienteData, callback)
 	}
 }
 
-//actualizar un usuario
+//actualizar un cliente
 clienteModel.updateUser = function(userData, callback)
 {
 	//console.log(userData); return;
 	if(connection)
 	{
-		var sql = 'UPDATE users SET username = ' + connection.escape(userData.username) + ',' +  
+		var sql = 'UPDATE CLIENTES SET username = ' + connection.escape(userData.username) + ',' +  
 		'email = ' + connection.escape(userData.email) +
 		'WHERE id = ' + userData.id;
 
@@ -95,18 +95,18 @@ clienteModel.updateUser = function(userData, callback)
 	}
 }
 
-//eliminar un usuario pasando la id a eliminar
+//eliminar un cliente pasando la id a eliminar
 clienteModel.deleteUser = function(id, callback)
 {
 	if(connection)
 	{
-		var sqlExists = 'SELECT * FROM users WHERE id = ' + connection.escape(id);
+		var sqlExists = 'SELECT * FROM CLIENTES WHERE ID = ' + connection.escape(id);
 		connection.query(sqlExists, function(err, row) 
 		{
-			//si existe la id del usuario a eliminar
+			//si existe la id del cliente a eliminar
 			if(row)
 			{
-				var sql = 'DELETE FROM users WHERE id = ' + connection.escape(id);
+				var sql = 'DELETE FROM CLIENTES WHERE ID = ' + connection.escape(id);
 				connection.query(sql, function(error, result) 
 				{
 					if(error)
@@ -115,13 +115,13 @@ clienteModel.deleteUser = function(id, callback)
 					}
 					else
 					{
-						callback(null,{"msg":"deleted"});
+						callback(null,{"msg": "El cliente fue eliminado exitosamente."});
 					}
 				});
 			}
 			else
 			{
-				callback(null,{"msg":"notExist"});
+				callback(null,{"msg":"El cliente no existe registrado."});
 			}
 		});
 	}
